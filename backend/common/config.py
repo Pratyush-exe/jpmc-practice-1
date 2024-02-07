@@ -1,2 +1,5 @@
 class Config(object):
-    SQLALCHEMY_DATABASE_URI = "postgresql+psycopg2://1234:1234@192.168.99.100/todo_list"
+    SQLALCHEMY_DATABASE_URI = (
+        "postgresql://postgres:1234@host.docker.internal:8001/task"
+    )
+    SQLALCHEMY_TRACK_MODIFICATIONS = True
