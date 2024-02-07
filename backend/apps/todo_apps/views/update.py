@@ -6,26 +6,28 @@ from flask import request
 
 
 class Update(BaseView):
-    def put(self, id):
+    def put(self, uuid):
         try:
-            task = Task.query.filter_by(id=id).first()
+            task = Task.query.filter_by(uuid=uuid).first()
+            payload = request.json
+            if payload.get("uuid"):
+                print("Warning: 'uuid' will be ignored")
             if task:
-                payload = request.json
                 task.title = payload.get("title", task.title)
-                task.description = payload.description("description", task.description)
+                task.description = payload.get("description", task.description)
 
                 database.session.commit()
 
                 response_data = {
                     "message": "task updated",
-                    "task_id": id,
+                    "uuid": uuid,
                 }
                 status_code = 200
 
             else:
                 response_data = {
                     "message": "task not found",
-                    "task_id": id,
+                    "uuid": uuid,
                 }
                 status_code = 404
             return self.get_response(response_data, status_code)
