@@ -3,7 +3,7 @@ version: '3.5'
 services:
 
   flask-api:
-    container_name: app-app
+    container_name: flask-app
     restart: always
     build:
       context: ./backend/
@@ -28,7 +28,6 @@ services:
       - POSTGRES_PASSWORD=1234
     volumes:
       - './database/init:/docker-entrypoint-initdb.d/'
-
   frontend:
     container_name: react-app
     build:

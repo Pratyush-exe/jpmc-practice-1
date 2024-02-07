@@ -54,7 +54,8 @@ const TaskContainer = () => {
             const response = await axios.post('http://localhost:5000/todo/v1/create-task', data, config);
             console.log("Task added:", response.data);
             const updatedResponse = await axios.get('http://localhost:5000/todo/v1/get-tasks');
-            setItems(updatedResponse.data['data']);
+            setItems(sortObjectsByTitle(updatedResponse.data['data']));
+            window.location.reload()
         } catch (error) {
             console.error('Error adding task:', error);
         }
