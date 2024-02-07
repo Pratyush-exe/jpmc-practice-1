@@ -11,7 +11,7 @@ class Update(BaseView):
             task = Task.query.filter_by(uuid=uuid).first()
             payload = request.json
             if payload.get("uuid"):
-                print("Warning: 'uuid' will be ignored")
+                print("warning: 'uuid' will be ignored")
             if task:
                 task.title = payload.get("title", task.title)
                 task.description = payload.get("description", task.description)
@@ -32,8 +32,10 @@ class Update(BaseView):
                 status_code = 404
             return self.get_response(response_data, status_code)
 
+        except ResponseException:
+            raise
         except Exception as error:
             raise ResponseException(
-                message={"message": "error occured", "error": str(error)},
+                message=f"error:{str(error)}",
                 status_code=500,
             )

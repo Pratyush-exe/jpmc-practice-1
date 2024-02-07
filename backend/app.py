@@ -3,6 +3,8 @@ from flask_cors import CORS
 
 from databases.models import database
 from common.config import Config
+from exceptions import ResponseException
+from common.utils import jsonify_response
 
 from apps.health_check import HealthCheckup
 from apps.todo_apps.views import Create, Read, Update, Delete
@@ -18,6 +20,12 @@ def create_app(config):
 
 
 app = create_app(Config)
+
+
+@app.errorhandler(ResponseException)
+def handle_exception(error):
+    return jsonify_response(error)
+
 
 app.add_url_rule("/todo/v1/create-task", view_func=Create.as_view("create"))
 app.add_url_rule("/todo/v1/get-tasks", view_func=Read.as_view("read"))

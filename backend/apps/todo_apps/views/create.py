@@ -13,12 +13,12 @@ class Create(BaseView):
             uuid = str(uuid4())
 
             if not payload.get("title") or not payload.get("title"):
-                raise ResponseException(message="'title' not found", status_code=400)
+                raise ResponseException(
+                    message="error: 'title' not found", status_code=400
+                )
 
             if payload.get("uuid"):
-                raise ResponseException(
-                    message="WARNING 'uuid' will be ignored", status_code=400
-                )
+                print("'uuid' will be ignored", flush=True)
 
             new_task = Task(
                 uuid=uuid,
@@ -35,8 +35,10 @@ class Create(BaseView):
             status_code = 200
             return self.get_response(response_data, status_code)
 
+        except ResponseException:
+            raise
         except Exception as error:
             raise ResponseException(
-                message={"message": "error occured", "error": str(error)},
+                message=f"error:{str(error)}",
                 status_code=500,
             )

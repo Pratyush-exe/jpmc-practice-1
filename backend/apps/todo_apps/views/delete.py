@@ -26,8 +26,10 @@ class Delete(BaseView):
                 status_code = 404
             return self.get_response(response_data, status_code)
 
+        except ResponseException:
+            raise
         except Exception as error:
             raise ResponseException(
-                message={"message": "error occured", "error": str(error)},
+                message=f"error:{str(error)}",
                 status_code=500,
             )
