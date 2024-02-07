@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import Task from "../task/Task"
 import axios from "axios"
+import "./TaskContainer.css"
 
 
 const TaskContainer = () => {
@@ -13,7 +14,7 @@ const TaskContainer = () => {
         const fetchData = async () => {
             try {
                 const response = await axios.get('http://localhost:5000/todo/v1/get-tasks');
-                setItems(response.data['data']);
+                setItems(sortObjectsByTitle(response.data['data']));
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
@@ -21,6 +22,22 @@ const TaskContainer = () => {
 
         fetchData();
     }, [reload]);
+
+    function sortObjectsByTitle(objects) {
+        return objects.sort((a, b) => {
+            const titleA = a.title.toLowerCase();
+            const titleB = b.title.toLowerCase();
+
+            if (titleA < titleB) {
+                return -1;
+            }
+            if (titleA > titleB) {
+                return 1;
+            }
+            return 0;
+        });
+    }
+
 
     const handleAddTask = async () => {
         try {
@@ -46,31 +63,34 @@ const TaskContainer = () => {
     return (
         <div className="task-container">
             <div className="add-task">
-                <input
-                    type="text"
-                    placeholder="Enter task title"
-                    value={newTaskTitle}
-                    onChange={(e) => setNewTaskTitle(e.target.value)}
-                />
-                <input
-                    type="text"
-                    placeholder="Enter task description"
-                    value={newTaskDescription}
-                    onChange={(e) => setNewTaskDescription(e.target.value)}
-                />
-                <button onClick={handleAddTask}>Add Task</button>
+                <div className="add-task-input">
+                    <input
+                        type="text"
+                        placeholder="Enter task title"
+                        value={newTaskTitle}
+                        onChange={(e) => setNewTaskTitle(e.target.value)}
+                        className="title"
+                    />
+                    <input
+                        type="text"
+                        placeholder="Enter task description"
+                        value={newTaskDescription}
+                        onChange={(e) => setNewTaskDescription(e.target.value)}
+                        className="description"
+                    />
+                </div>
+                <button className="add-task-button" onClick={handleAddTask}>Add Task</button>
             </div>
             <div className="tasks">
                 {items.map((x, i) => (
-                    <div key={i}>
-                        <Task
-                            id={x['uuid']}
-                            title={x['title']}
-                            description={x['description']}
-                            setReload={setReload}
-                            reload={reload}
-                        />
-                    </div>
+                    <Task
+                        key={i}
+                        id={x['uuid']}
+                        title={x['title']}
+                        description={x['description']}
+                        setReload={setReload}
+                        reload={reload}
+                    />
                 ))}
             </div>
         </div>

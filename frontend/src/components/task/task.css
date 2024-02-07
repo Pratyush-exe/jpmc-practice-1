@@ -1,0 +1,60 @@
+.task {
+    border-bottom: 1px solid grey;
+}
+
+.edit-input {
+    display: flex;
+    flex-direction: column;
+}
+
+.display-div {
+    display: flex;
+    flex-direction: column;
+}
+
+.display-buttons {
+    display: flex;
+    flex-direction: column;
+}
+
+.display-cont {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px;
+}
+
+.edit-div {
+    display: flex;
+    flex-direction: column;
+}
+
+.edit-buttons {
+    display: flex;
+    flex-direction: column;
+}
+
+.edit-cont {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px;
+}
+
+.title {
+    font-size: 20px;
+    font-weight: 600;
+    width: 90%;
+}
+
+input[type="text"] {
+    outline: none;
+    border: none;
+}
+
+input:focus {
+    text-decoration: underline;
+}
+
+button {
+    font-weight: bold;
+    cursor: pointer;
+}
