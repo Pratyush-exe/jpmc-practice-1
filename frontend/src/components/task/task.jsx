@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import axios from 'axios';
 import "./Task.css"
-import React from 'react'
 
 function Task({ id, title, description, setReload, reload }) {
     const [isEditing, setIsEditing] = useState(false);
