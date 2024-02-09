@@ -1,0 +1,14 @@
+flask-restful
+Flask
+Flask-Ext
+Flask-Script
+flask-cors
+flask-login
+Flask-SQLAlchemy
+Flask-Migrate
+mysql-connector-python
+python-dotenv
+sqlalchemy
+pytest-flask
+Flask-RESTful
+psycopg2-binary
